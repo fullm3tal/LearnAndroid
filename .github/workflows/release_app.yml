@@ -1,0 +1,19 @@
+name: Release App
+
+
+# When it will be triggered
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+
+#Where it will run
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."

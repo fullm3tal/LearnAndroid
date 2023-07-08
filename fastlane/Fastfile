@@ -66,23 +66,19 @@ platform :android do
     end
 
     def get_next_version_code(consoleTrack)
-
         otherTrack = "internal"
          if(consoleTrack == "internal")
             otherTrack = "production"
          end
-
         versionCode = "#{google_play_track_version_codes(package_name: 'com.leaphorizon.learnandroid',
                                                                                   track: otherTrack,
                                                                                   json_key: 'fastlane/fastlane-key.json',)[0] + 1}"
-
         internalVersionCode  = "#{google_play_track_version_codes(package_name: 'com.leaphorizon.learnandroid',
                                                                track: consoleTrack,
                                                                json_key: 'fastlane/fastlane-key.json',)[0] + 1}"
         if(internalVersionCode.to_i > versionCode.to_i)
             versionCode = internalVersionCode
         end
-
         return versionCode
 
     end

@@ -8,4 +8,10 @@ platform :android do
         )
     end
 
+    lane :build_android_release do
+        gradle(
+          tasks: ["clean", "bundleDebug"]
+        )
+    end
+
 end

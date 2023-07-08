@@ -43,7 +43,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 
-    //Display notification
+    //Pick files
     implementation 'com.github.atwa:filepicker:1.0.3'
 }
 

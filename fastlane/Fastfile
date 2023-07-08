@@ -30,6 +30,10 @@ platform :android do
 #         track: "production",
 #         json_key_path: 'fastlane/fastlane-key.json')
     version_code = get_next_version_code('internal')
+    increment_version_code(
+      gradle_file_path: "./app/build.gradle",
+      version_code: version_code
+    )
     UI.message("Using Version Code: "+ version_code)
     build_android_release(versionCode: version_code)
     upload_to_play_store(
@@ -46,6 +50,10 @@ platform :android do
       json_key: 'fastlane/fastlane-key.json'
     )
     version_code = get_next_version_code('production')
+    increment_version_code(
+      gradle_file_path: "./app/build.gradle",
+      version_code: version_code
+    )
     UI.message("Using Version Code: "+ version_code)
     build_android_release(versionCode: version_code)
     upload_to_play_store(
@@ -78,25 +86,5 @@ platform :android do
         return versionCode
 
     end
-
-#     def track_exists?(package_name, track, json_key_path)
-#       android_publisher = Google::Apis::AndroidpublisherV3
-#       scopes = ['https://www.googleapis.com/auth/androidpublisher']
-#
-#       credentials = Google::Auth::ServiceAccountCredentials.make_creds(
-#         json_key_io: File.open(json_key_path),
-#         scope: scopes
-#       )
-#
-#       android_publisher::AndroidPublisherService.new.authorization = credentials
-#
-#       begin
-#         android_publisher::AndroidPublisherService.new.get_track(package_name, track)
-#         return true
-#       rescue Google::Apis::ClientError => e
-#         return false if e.status_code == 404
-#         raise e
-#       end
-#     end
 
 end

@@ -13,7 +13,7 @@ platform :android do
            task: "bundle",
             build_type: "Release",
             properties: {
-              "android.injected.signing.store.file" => "F:\\AndroidStudioKeys\\learnAndroid.jks",
+              "android.injected.signing.store.file" => "learnAndroid.jks",
               "android.injected.signing.store.password" => "LearnAndroid",
               "android.injected.signing.key.alias" => "LearnAndroid",
               "android.injected.signing.key.password" => "LearnAndroid",
@@ -26,9 +26,6 @@ platform :android do
     validate_play_store_json_key(
       json_key: 'fastlane/fastlane-key.json'
     )
-#     check_track = track_exists(package_name: 'com.leaphorizon.learnandroid',
-#         track: "production",
-#         json_key_path: 'fastlane/fastlane-key.json')
     version_code = get_next_version_code('internal')
     increment_version_code(
       gradle_file_path: "./app/build.gradle",
@@ -37,7 +34,7 @@ platform :android do
     UI.message("Using Version Code: "+ version_code)
     build_android_release(versionCode: version_code)
     upload_to_play_store(
-    json_key: 'fastlane/fastlane-key.json',
+    json_key: 'fastlane/fastlane-android-gcp.json',
     package_name: 'com.leaphorizon.learnandroid',
     aab:"apk/app-release.aab",
     track: "internal",
@@ -47,7 +44,7 @@ platform :android do
 
     lane :upload_build_production do
     validate_play_store_json_key(
-      json_key: 'fastlane/fastlane-key.json'
+      json_key: 'fastlane/fastlane-android-gcp.json'
     )
     version_code = get_next_version_code('production')
     increment_version_code(
@@ -75,7 +72,7 @@ platform :android do
                                                                                   json_key: 'fastlane/fastlane-key.json',)[0] + 1}"
         internalVersionCode  = "#{google_play_track_version_codes(package_name: 'com.leaphorizon.learnandroid',
                                                                track: consoleTrack,
-                                                               json_key: 'fastlane/fastlane-key.json',)[0] + 1}"
+                                                               json_key: 'fastlane/fastlane-android-gcp.json',)[0] + 1}"
         if(internalVersionCode.to_i > versionCode.to_i)
             versionCode = internalVersionCode
         end

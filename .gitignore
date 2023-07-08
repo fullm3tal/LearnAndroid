@@ -180,4 +180,4 @@ fabric.properties
 /apk
 /fastlane/README.md
 /fastlane/report.xml
-/fastlane/fastlane-key.json
+/fastlane/fastlane-android-gcp.json

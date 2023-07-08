@@ -177,6 +177,7 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/kotlin,androidstudio
 
 
-/apkFolder
+/apk
 /fastlane/README.md
 /fastlane/report.xml
+/fastlane/fastlane-key.json

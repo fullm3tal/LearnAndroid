@@ -12,16 +12,27 @@ android {
         minSdk 24
         targetSdk 31
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,19 +59,18 @@ dependencies {
 }
 
 task copyApk (type: Copy, dependsOn: "test") {
-    def sourceDir = "$rootDir/app/build/outputs/apk/debug/app-debug.apk"
-    def destinationDir = "$rootDir/apkFolder"
+    def sourceDir = "$rootDir/app/build/outputs/bundle/release/app-release.aab"
+    def destinationDir = "$rootDir/apk"
     from sourceDir
     into destinationDir
-    rename "app-debug.apk" , "learn-android.apk"
     doLast {
-        def file = new File(destinationDir, "learn-android.apk")
+        def file = new File(destinationDir, "app-release.aab")
         ant.checksum file: file.path
     }
 }
 
 tasks.whenTaskAdded { task ->
-    if(task.name == "assembleDebug") {
+    if(task.name == "bundleRelease") {
         task.finalizedBy "copyApk"
     }
 }

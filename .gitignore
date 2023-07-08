@@ -178,3 +178,5 @@ fabric.properties
 
 
 /apkFolder
+/fastlane/README.md
+/fastlane/report.xml

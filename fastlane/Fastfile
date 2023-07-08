@@ -1,0 +1,11 @@
+default_platform(:android)
+
+platform :android do
+
+    lane :build_android_debug do
+        gradle(
+          tasks: ["clean", "bundleDebug"]
+        )
+    end
+
+end

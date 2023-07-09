@@ -66,4 +66,11 @@ jobs:
 
       - name: Build with Gradle
         run: bundle exec fastlane upload_build_internal
+        env:
+          KEYSTORE_FILE_PATH: ${{ steps.keystore_file.outputs.filePath }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          JSON_FILE_PATH:  ${{ steps.json_file.outputs.filePath }}
+
       - run: echo "Build status report=${{ job.status }}."

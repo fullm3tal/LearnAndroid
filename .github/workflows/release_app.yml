@@ -45,8 +45,14 @@ jobs:
           ruby-version: 3.2.0
           bundler-cache: true
 
+#      - name: Restore learnAndroid.jks
+#        run: echo ${{secrets.KEYSTORE_LEARN_ANDROID}} | base64 -d > /home/runner/work/LearnAndroid/LearnAndroid/app/learnAndroid.jks
       - name: Restore learnAndroid.jks
-        run: echo ${{secrets.KEYSTORE_LEARN_ANDROID}} | base64 -d > /home/runner/work/LearnAndroid/LearnAndroid/app/learnAndroid.jks
+        id: write_file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'learnAndroid.jks'
+          encodedString: ${{ secrets.KEYSTORE_LEARN_ANDROID }}
 
       - run: echo "Upload apk to internal testing"
 

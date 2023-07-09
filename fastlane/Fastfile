@@ -1,3 +1,5 @@
+require 'dotenv/load'
+
 default_platform(:android)
 
 platform :android do
@@ -9,13 +11,20 @@ platform :android do
     end
 
     lane :build_android_release do |options|
+      signing_config = {
+        keystore_path: ENV['KEYSTORE_FILE_PATH'],
+        keystore_password: ENV['KEYSTORE_PASSWORD'],
+        key_alias: ENV['KEY_ALIAS'],
+        key_password: ENV['KEY_PASSWORD']
+      }
         gradle(
            task: "bundle",
             build_type: "Release",
             properties: {
-              "android.injected.signing.store.password" => "LearnAndroid",
-              "android.injected.signing.key.alias" => "LearnAndroid",
-              "android.injected.signing.key.password" => "LearnAndroid",
+              "android.injected.signing.store.file" => signing_config[:keystore_path],
+              "android.injected.signing.store.password" => signing_config[:keystore_password],
+              "android.injected.signing.key.alias" => signing_config[:key_alias],
+              "android.injected.signing.key.password" =>signing_config[:key_password],
               "android.injected.version.code" => options[:versionCode]
             }
         )
@@ -23,7 +32,7 @@ platform :android do
 
     lane :upload_build_internal do
     validate_play_store_json_key(
-      json_key: 'fastlane/fastlane-android-gcp.json'
+      json_key: ENV['JSON_FILE_PATH']
     )
     version_code = get_next_version_code('internal')
     increment_version_code(
@@ -33,7 +42,7 @@ platform :android do
     UI.message("Using Version Code: "+ version_code)
     build_android_release(versionCode: version_code)
     upload_to_play_store(
-    json_key: 'fastlane/fastlane-android-gcp.json',
+    json_key: ENV['JSON_FILE_PATH'],
     package_name: 'com.leaphorizon.learnandroid',
     aab:"apk/app-release.aab",
     track: "internal",
@@ -43,7 +52,7 @@ platform :android do
 
     lane :upload_build_production do
     validate_play_store_json_key(
-      json_key: 'fastlane/fastlane-android-gcp.json'
+      json_key: ENV['JSON_FILE_PATH']
     )
     version_code = get_next_version_code('production')
     increment_version_code(
@@ -53,7 +62,7 @@ platform :android do
     UI.message("Using Version Code: "+ version_code)
     build_android_release(versionCode: version_code)
     upload_to_play_store(
-    json_key: 'fastlane/fastlane-android-gcp.json',
+    json_key: ENV['JSON_FILE_PATH'],
     package_name: 'com.leaphorizon.learnandroid',
     aab:"apk/app-release.aab",
     track: "production",
@@ -68,10 +77,10 @@ platform :android do
          end
         versionCode = "#{google_play_track_version_codes(package_name: 'com.leaphorizon.learnandroid',
                                                                                   track: otherTrack,
-                                                                                  json_key: 'fastlane/fastlane-android-gcp.json',)[0] + 1}"
+                                                                                  json_key: ENV['JSON_FILE_PATH'],)[0] + 1}"
         internalVersionCode  = "#{google_play_track_version_codes(package_name: 'com.leaphorizon.learnandroid',
                                                                track: consoleTrack,
-                                                               json_key: 'fastlane/fastlane-android-gcp.json',)[0] + 1}"
+                                                               json_key: ENV['JSON_FILE_PATH'],)[0] + 1}"
         if(internalVersionCode.to_i > versionCode.to_i)
             versionCode = internalVersionCode
         end

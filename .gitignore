@@ -182,3 +182,5 @@ fabric.properties
 /fastlane/report.xml
 /fastlane/fastlane-android-gcp.json
 app/learnAndroid.jks.asc
+
+*.env

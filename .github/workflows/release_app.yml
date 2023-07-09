@@ -15,7 +15,7 @@ jobs:
   build:
 
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "This job is running on a ${{ runner.os }} server hosted by GitHub!"
@@ -39,11 +39,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Install bundler & Fastlane
-        run: |
-          gem install bundler:2.2.27
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3       
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1.138.0
+        with:
+          ruby-version: 3.2.1
+          bundler-cache: true
 
       - run: echo "Upload apk to internal testing"
 

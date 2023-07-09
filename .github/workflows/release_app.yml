@@ -38,8 +38,8 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - run: echo "Building Debug APK."
+      - run: echo "Upload apk to internal testing"
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: bundle exec fastlane upload_build_internal
       - run: echo "Build status report=${{ job.status }}."

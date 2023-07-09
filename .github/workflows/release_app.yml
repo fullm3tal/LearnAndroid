@@ -46,7 +46,7 @@ jobs:
           bundler-cache: true
 
       - name: Restore learnAndroid.jks
-        run: echo ${{secrets.KEYSTORE_LEARN_ANDROID}} | base64 -d > /home/runner/work/learnAndroid/learnAndroid/app/learnAndroid.jks
+        run: echo ${{secrets.KEYSTORE_LEARN_ANDROID}} | base64 -d > /home/runner/work/LearnAndroid/LearnAndroid/app/learnAndroid.jks
 
       - run: echo "Upload apk to internal testing"
 

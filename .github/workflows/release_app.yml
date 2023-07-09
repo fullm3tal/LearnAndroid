@@ -48,11 +48,19 @@ jobs:
 #      - name: Restore learnAndroid.jks
 #        run: echo ${{secrets.KEYSTORE_LEARN_ANDROID}} | base64 -d > /home/runner/work/LearnAndroid/LearnAndroid/app/learnAndroid.jks
       - name: Restore learnAndroid.jks
-        id: write_file
+        id: keystore_file
         uses: timheuer/base64-to-file@v1.2
         with:
           fileName: 'learnAndroid.jks'
           encodedString: ${{ secrets.KEYSTORE_LEARN_ANDROID }}
+
+
+      - name: Restore fcm-android-key.json
+        id: json_file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'fcm-android-key.json'
+          encodedString: ${{ secrets.GCP_KEY }}
 
       - run: echo "Upload apk to internal testing"
 

@@ -14,9 +14,6 @@ on:
 jobs:
   build:
 
-
-
-
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +23,7 @@ jobs:
       - run: echo "The ${{ github.repository }} repository has been cloned."
 
       - name: Restore learnAndroid.jks
-        run: echo $LEARNANDROID | base64 -d > app/learnAndroid.jks
+        run: echo $LEARNANDROID | base64 --decode > app/learnAndroid.jks
       - run: echo "Setting up JDK"
 
       - name: set up JDK 11

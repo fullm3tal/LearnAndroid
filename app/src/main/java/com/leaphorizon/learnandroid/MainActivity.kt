@@ -1,12 +1,10 @@
 package com.leaphorizon.learnandroid
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.atwa.filepicker.core.FilePicker
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,9 +17,8 @@ class MainActivity : AppCompatActivity() {
             pickImage()
         }
     }
-
-    fun pickImage() {
-        filePicker.pickImage() { meta ->
+    private fun pickImage() {
+        filePicker.pickImage {
         }
     }
 

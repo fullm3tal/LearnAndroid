@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">LearnAndroid</string>
     <string name="click_me">Click me</string>
+    <string name="tv_display_toast">Display Toast</string>
 </resources>

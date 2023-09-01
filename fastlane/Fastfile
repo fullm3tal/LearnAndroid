@@ -10,6 +10,10 @@ platform :android do
         )
     end
 
+      lane :clean_build do
+        gradle(task: 'clean')
+      end
+
     lane :build_android_release do |options|
       signing_config = {
         keystore_path: ENV['KEYSTORE_FILE_PATH'],
@@ -17,6 +21,7 @@ platform :android do
         key_alias: ENV['KEY_ALIAS'],
         key_password: ENV['KEY_PASSWORD']
       }
+      clean_build()
         gradle(
            task: "bundle",
             build_type: "Release",
